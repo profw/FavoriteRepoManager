@@ -1,0 +1,101 @@
+package ru.profw.favoriterepomanager
+
+import android.content.Intent
+import android.database.Cursor
+import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import ru.profw.favoriterepomanager.adapter.RepoAdapter
+import ru.profw.favoriterepomanager.databinding.ActivityMainBinding
+import ru.profw.favoriterepomanager.model.LikedRepository
+
+class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var adapter: RepoAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        enableEdgeToEdge()
+        setContentView(R.layout.activity_main)
+
+
+        adapter = RepoAdapter(
+            onOpenClick = { repo ->
+                val intent = Intent(Intent.ACTION_VIEW, repo.htmlUrl.toUri())
+                startActivity(intent)
+            },
+            onDeleteClick = { repo ->
+                deleteRepository(repo)
+            }
+        )
+
+        binding.reposRecyclerView.layoutManager = LinearLayoutManager(this)
+        binding.reposRecyclerView.adapter = adapter
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+    }
+
+    private fun loadRepositories() {
+        val cursor = contentResolver.query(
+            "content://ru.profw.demo.githubsearch.provider/liked_repositories".toUri(),
+            null, null, null, null
+        )
+
+        val repositories = mutableListOf<LikedRepository>()
+        cursor?.use {
+            val idIndex = it.getColumnIndex("id")
+            val nameIndex = it.getColumnIndex("name")
+            val ownerLoginIndex = it.getColumnIndex("owner_login")
+            val avatarUrlIndex = it.getColumnIndex("avatar_url")
+            val htmlUrlIndex = it.getColumnIndex("html_url")
+            val descriptionIndex = it.getColumnIndex("description")
+
+            while (it.moveToNext()) {
+
+                val id = it.getLong(idIndex)
+                val name = it.getStringOrEmpty(nameIndex)
+                val ownerLogin = it.getStringOrEmpty(ownerLoginIndex)
+                val avatarUrl = it.getStringOrEmpty(avatarUrlIndex)
+                val htmlUrl = it.getStringOrEmpty(htmlUrlIndex)
+                val description = it.getStringOrEmpty(descriptionIndex)
+
+                repositories.add(
+                    LikedRepository(
+                        id,
+                        name,
+                        ownerLogin,
+                        avatarUrl,
+                        htmlUrl,
+                        description
+                    )
+                )
+            }
+        }
+
+        adapter.repositories = repositories
+        adapter.notifyDataSetChanged()
+    }
+
+
+    private fun deleteRepository(repo: LikedRepository) {
+        val uri =
+            "content://ru.profw.demo.githubsearch.provider/liked_repositories/${repo.id}"
+                .toUri()
+        contentResolver.delete(uri, null, null)
+
+        // Обновляем список после удаления
+        loadRepositories()
+    }
+
+    private fun Cursor.getStringOrEmpty(index: Int): String =
+        if (index >= 0) getString(index) else ""
+}
