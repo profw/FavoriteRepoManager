@@ -61,9 +61,9 @@ class MainActivity : AppCompatActivity() {
         cursor?.use {
             val idIndex = it.getColumnIndex("id")
             val nameIndex = it.getColumnIndex("name")
-            val ownerLoginIndex = it.getColumnIndex("owner_login")
-            val avatarUrlIndex = it.getColumnIndex("avatar_url")
-            val htmlUrlIndex = it.getColumnIndex("html_url")
+            val ownerLoginIndex = it.getColumnIndex("ownerLogin")
+            val avatarUrlIndex = it.getColumnIndex("avatarUrl")
+            val htmlUrlIndex = it.getColumnIndex("htmlUrl")
             val descriptionIndex = it.getColumnIndex("description")
 
             while (it.moveToNext()) {
