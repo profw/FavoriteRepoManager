@@ -17,13 +17,15 @@ import ru.profw.favoriterepomanager.model.LikedRepository
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: RepoAdapter
-
+    companion object {
+        const val AUTHORITY = "ru.profw.repofinder.provider"
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
+        setContentView(binding.root)
 
         adapter = RepoAdapter(
             onOpenClick = { repo ->
@@ -34,13 +36,13 @@ class MainActivity : AppCompatActivity() {
                 deleteRepository(repo)
             }
         )
-        binding.searchButton.setOnClickListener {
-            loadRepositories()
-        }
+
         binding.reposRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.reposRecyclerView.adapter = adapter
 
-        loadRepositories()
+        binding.searchButton.setOnClickListener {
+            loadRepositories()
+        }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -51,7 +53,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadRepositories() {
         val cursor = contentResolver.query(
-            "content://ru.profw.demo.githubsearch.provider/liked_repositories".toUri(),
+            "content://$AUTHORITY/liked_repositories".toUri(),
             null, null, null, null
         )
 
@@ -96,7 +98,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun deleteRepository(repo: LikedRepository) {
         val uri =
-            "content://ru.profw.demo.githubsearch.provider/liked_repositories/${repo.id}"
+            "content://$AUTHORITY/liked_repositories/${repo.id}"
                 .toUri()
         contentResolver.delete(uri, null, null)
 
