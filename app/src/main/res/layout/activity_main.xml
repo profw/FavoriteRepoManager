@@ -9,21 +9,11 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/likedReposInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4pt"
-        android:clickable="true"
-        android:focusable="true"
-        android:textSize="18sp"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Button
-        android:id="@+id/searchButton"
+        android:id="@+id/refreshButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/search" />
+        android:text="@string/refresh" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/reposRecyclerView"

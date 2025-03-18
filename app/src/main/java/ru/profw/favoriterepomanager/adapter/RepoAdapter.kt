@@ -3,11 +3,11 @@ package ru.profw.favoriterepomanager.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
+import coil3.load
 import ru.profw.favoriterepomanager.R
 import ru.profw.favoriterepomanager.model.LikedRepository
 
@@ -25,8 +25,8 @@ class RepoAdapter(
         val name: TextView = itemView.findViewById(R.id.repoName)
         val owner: TextView = itemView.findViewById(R.id.repoOwner)
         val avatar: ImageView = itemView.findViewById(R.id.repoAvatar)
-        val openButton: Button = itemView.findViewById(R.id.openButton)
-        val deleteButton: Button = itemView.findViewById(R.id.deleteButton)
+        val openButton: ImageButton = itemView.findViewById(R.id.openButton)
+        val deleteButton: ImageButton = itemView.findViewById(R.id.deleteButton)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepoViewHolder {

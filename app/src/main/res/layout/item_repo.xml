@@ -1,39 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="8dp">
-
-    <TextView
-        android:id="@+id/repoName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Название репозитория"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/repoOwner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Логин автора" />
+    android:background="?selectableItemBackground"
+    android:paddingStart="10dp"
+    android:paddingTop="5dp"
+    android:paddingEnd="10dp"
+    android:paddingBottom="5dp">
 
     <ImageView
         android:id="@+id/repoAvatar"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginTop="8dp" />
+        android:contentDescription="@string/repository_avatar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/openButton"
+    <TextView
+        android:id="@+id/repoName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Открыть" />
+        android:layout_marginStart="4pt"
+        android:clickable="true"
+        android:contentDescription="@string/repository_name"
+        android:focusable="true"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@id/repoAvatar"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/deleteButton"
+    <TextView
+        android:id="@+id/repoOwner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Удалить" />
-</LinearLayout>
+        android:layout_marginStart="4pt"
+        android:layout_marginEnd="4pt"
+        android:contentDescription="@string/owner_login"
+        app:layout_constraintStart_toEndOf="@+id/repoAvatar"
+        app:layout_constraintTop_toBottomOf="@id/repoName" />
+
+     <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/openButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_open_link"
+            android:contentDescription="@string/open_repo" />
+
+        <ImageButton
+            android:id="@+id/deleteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_delete"
+            android:contentDescription="@string/delete_repo" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

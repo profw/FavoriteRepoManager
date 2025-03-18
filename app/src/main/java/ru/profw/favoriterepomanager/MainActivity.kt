@@ -10,6 +10,9 @@ import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import coil3.ImageLoader
+import coil3.SingletonImageLoader
+import coil3.request.crossfade
 import ru.profw.favoriterepomanager.adapter.RepoAdapter
 import ru.profw.favoriterepomanager.databinding.ActivityMainBinding
 import ru.profw.favoriterepomanager.model.LikedRepository
@@ -17,9 +20,11 @@ import ru.profw.favoriterepomanager.model.LikedRepository
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: RepoAdapter
+
     companion object {
         const val AUTHORITY = "ru.profw.repofinder.provider"
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -40,9 +45,17 @@ class MainActivity : AppCompatActivity() {
         binding.reposRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.reposRecyclerView.adapter = adapter
 
-        binding.searchButton.setOnClickListener {
+        binding.refreshButton.setOnClickListener {
             loadRepositories()
         }
+
+        SingletonImageLoader.setSafe { context ->
+            ImageLoader.Builder(context)
+                .crossfade(true)
+                .build()
+        }
+
+        loadRepositories()
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -94,7 +107,6 @@ class MainActivity : AppCompatActivity() {
         }
         adapter.notifyDataSetChanged()
     }
-
 
     private fun deleteRepository(repo: LikedRepository) {
         val uri =

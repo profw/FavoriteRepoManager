@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">FavoriteRepoManager</string>
     <string name="no_liked_repos">Избранных репозиториев не найдено</string>
-    <string name="search">Поиск</string>
+    <string name="refresh">Обновить</string>
+    <string name="url">URL репозитория</string>
+    <string name="owner_login">Логин автора</string>
+    <string name="repository_name">Название репозитория</string>
+    <string name="repository_avatar">Аватар репозитория</string>
+    <string name="open_repo">Открыть</string>
+    <string name="delete_repo">Удалить</string>
 </resources>
