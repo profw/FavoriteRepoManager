@@ -25,8 +25,8 @@ class RepoAdapter(
         val name: TextView = itemView.findViewById(R.id.repoName)
         val owner: TextView = itemView.findViewById(R.id.repoOwner)
         val avatar: ImageView = itemView.findViewById(R.id.repoAvatar)
-        val openButton: ImageButton = itemView.findViewById(R.id.openButton)
-        val deleteButton: ImageButton = itemView.findViewById(R.id.deleteButton)
+        val view: View = itemView
+        val deleteButton: ImageView = itemView.findViewById(R.id.deleteButton)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepoViewHolder {
@@ -41,7 +41,7 @@ class RepoAdapter(
         holder.owner.text = repo.ownerLogin
         holder.avatar.load(repo.avatarUrl)
 
-        holder.openButton.setOnClickListener {
+        holder.view.setOnClickListener {
             onOpenClick(repo)
         }
 
