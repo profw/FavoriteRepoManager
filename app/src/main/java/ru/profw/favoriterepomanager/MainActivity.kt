@@ -1,7 +1,6 @@
 package ru.profw.favoriterepomanager
 
 import android.content.Intent
-import android.database.Cursor
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -10,14 +9,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil3.ImageLoader
 import coil3.SingletonImageLoader
 import coil3.request.crossfade
 import ru.profw.favoriterepomanager.adapter.RepoAdapter
 import ru.profw.favoriterepomanager.databinding.ActivityMainBinding
-import ru.profw.favoriterepomanager.model.LikedRepository
 import ru.profw.favoriterepomanager.viewmodel.FavoriteViewModel
 
 class MainActivity : AppCompatActivity() {
